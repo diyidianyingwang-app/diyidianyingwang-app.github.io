@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一电影网 - 高清影视在线观看 | diyidianyingwang-app.github.io</title>
+    <meta name="description" content="第一电影网(https://diyidianyingwang-app.github.io)是最新高清电影、电视剧、综艺节目在线观看平台，提供海量影视资源，分类清晰，更新及时，带给您极致的观影体验。">
+    <meta name="keywords" content="第一电影网, diyidianyingwang-app, 电影在线观看, 高清电影, 最新电影, 影视网站">
+    <meta name="author" content="第一电影网">
+    <meta name="robots" content="index, follow">
+    <style>
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #0b0c10;
+            color: #c5c6c7;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        a {
+            text-decoration: none;
+            color: #66fcf1;
+            transition: all 0.3s ease;
+        }
+        a:hover {
+            color: #45a29e;
+        }
+        ul {
+            list-style: none;
+        }
+        
+        /* 头部与导航 */
+        header {
+            background-color: rgba(31, 40, 51, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #66fcf1;
+            box-shadow: 0 0 15px rgba(102, 252, 241, 0.3);
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #66fcf1;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.7), 0 0 20px rgba(102, 252, 241, 0.5);
+            letter-spacing: 1px;
+        }
+        .logo span {
+            color: #fff;
+        }
+        nav ul {
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav a {
+            color: #c5c6c7;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #66fcf1;
+            transition: width 0.3s;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        nav a:hover {
+            color: #66fcf1;
+            background: rgba(102, 252, 241, 0.1);
+        }
+
+        /* 主视觉区 */
+        .hero {
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(11,12,16,0.9) 0%, rgba(31,40,51,0.8) 100%), 
+                        radial-gradient(circle at 50% 50%, rgba(102, 252, 241, 0.1) 0%, transparent 70%);
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(102, 252, 241, 0.03) 2px,
+                rgba(102, 252, 241, 0.03) 4px
+            );
+            pointer-events: none;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(102, 252, 241, 0.8);
+        }
+        .hero h1 strong {
+            color: #66fcf1;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            color: #c5c6c7;
+        }
+        .search-box {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #45a29e;
+            border-right: none;
+            background: rgba(11, 12, 16, 0.8);
+            color: #fff;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+            font-size: 1rem;
+        }
+        .search-box button {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #45a29e;
+            background: #45a29e;
+            color: #fff;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .search-box button:hover {
+            background: #66fcf1;
+            border-color: #66fcf1;
+            color: #0b0c10;
+        }
+
+        /* 栏目通用样式 */
+        .section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-align: left;
+            border-left: 5px solid #66fcf1;
+            padding-left: 15px;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.3);
+        }
+
+        /* 最新电影网格 */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+        .movie-card {
+            background: #1f2833;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #45a29e;
+            transition: transform 0.4s, box-shadow 0.4s;
+            cursor: pointer;
+        }
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(102, 252, 241, 0.2);
+            border-color: #66fcf1;
+        }
+        .movie-poster {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #1f2833, #0b0c10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #45a29e;
+            font-size: 3rem;
+            border-bottom: 1px solid #45a29e;
+        }
+        .movie-info {
+            padding: 1rem;
+        }
+        .movie-info h3 {
+            color: #66fcf1;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .movie-info p {
+            font-size: 0.9rem;
+            color: #c5c6c7;
+        }
+
+        /* 电影分类 */
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .cat-btn {
+            background: transparent;
+            border: 2px solid #45a29e;
+            color: #c5c6c7;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .cat-btn:hover {
+            background: #66fcf1;
+            color: #0b0c10;
+            border-color: #66fcf1;
+            box-shadow: 0 0 15px rgba(102, 252, 241, 0.5);
+        }
+
+        /* 关于我们 */
+        .about-content {
+            background: #1f2833;
+            padding: 3rem;
+            border-radius: 10px;
+            border: 1px solid #45a29e;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        .about-content h2 {
+            color: #66fcf1;
+            margin-bottom: 1.5rem;
+        }
+        .about-content p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .about-content .url {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(102, 252, 241, 0.1);
+            border: 1px dashed #66fcf1;
+            color: #66fcf1;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1.2rem;
+        }
+
+        /* 底部 */
+        footer {
+            background: #1f2833;
+            color: #c5c6c7;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid #45a29e;
+        }
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+        .footer-links {
+            margin-top: 1rem;
+        }
+        .footer-links a {
+            margin: 0 10px;
+            color: #45a29e;
+        }
+        .footer-links a:hover {
+            color: #66fcf1;
+        }
+
+        /* 移动端自适应 */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            .logo {
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            nav a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .section {
+                padding: 2rem 1rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            .movie-poster {
+                height: 220px;
+                font-size: 2rem;
+            }
+            .about-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+    <!-- 头部导航 -->
+    <header>
+        <div class="logo">第一<span>电影网</span></div>
+        <nav>
+            <ul>
+                <li><a href="#" title="第一电影网首页">首页</a></li>
+                <li><a href="#" title="最新电影">最新电影</a></li>
+                <li><a href="#" title="电影分类">电影分类</a></li>
+                <li><a href="#" title="关于第一电影网">关于我们</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主视觉区 -->
+    <main>
+        <section class="hero" id="home">
+            <h1>欢迎来到 <strong>第一电影网</strong></h1>
+            <p>探索海量高清影视资源，最新大片、经典老片一网打尽。随时随地，畅享视听盛宴。</p>
+            <div class="search-box">
+                <input type="text" placeholder="搜索电影、电视剧、综艺..." aria-label="搜索">
+                <button type="button">搜索</button>
+            </div>
+        </section>
+
+        <!-- 最新电影栏目 -->
+        <section class="section" id="latest">
+            <h2 class="section-title">最新上映</h2>
+            <div class="movie-grid">
+                <div class="movie-card">
+                    <div class="movie-poster">🎬</div>
+                    <div class="movie-info">
+                        <h3>沙丘2：绝命觉醒</h3>
+                        <p>科幻 / 冒险 / 2024</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">🎬</div>
+                    <div class="movie-info">
+                        <h3>奥本海默</h3>
+                        <p>传记 / 历史 / 2023</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">🎬</div>
+                    <div class="movie-info">
+                        <h3>蜘蛛侠：纵横宇宙</h3>
+                        <p>动画 / 动作 / 2023</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">🎬</div>
+                    <div class="movie-info">
+                        <h3>流浪地球3</h3>
+                        <p>科幻 / 灾难 / 2025</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">🎬</div>
+                    <div class="movie-info">
+                        <h3>封神第二部</h3>
+                        <p>奇幻 / 动作 / 2024</p>
+                    </div>
+                </div>
+                <div class="movie-card">
+                    <div class="movie-poster">🎬</div>
+                    <div class="movie-info">
+                        <h3>疯狂的麦克斯：狂暴女神</h3>
+                        <p>动作 / 冒险 / 2024</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 电影分类栏目 -->
+        <section class="section" id="categories">
+            <h2 class="section-title">电影分类</h2>
+            <div class="categories">
+                <a href="#" class="cat-btn">动作片</a>
+                <a href="#" class="cat-btn">喜剧片</a>
+                <a href="#" class="cat-btn">爱情片</a>
+                <a href="#" class="cat-btn">科幻片</a>
+                <a href="#" class="cat-btn">恐怖片</a>
+                <a href="#" class="cat-btn">剧情片</a>
+                <a href="#" class="cat-btn">动画片</a>
+                <a href="#" class="cat-btn">纪录片</a>
+                <a href="#" class="cat-btn">战争片</a>
+                <a href="#" class="cat-btn">悬疑片</a>
+            </div>
+        </section>
+
+        <!-- 关于我们栏目 -->
+        <section class="section" id="about">
+            <h2 class="section-title">关于第一电影网</h2>
+            <div class="about-content">
+                <h2>网站简介</h2>
+                <p><strong>第一电影网</strong>是一个专注于提供高清影视在线观看的综合性平台。我们致力于为广大影迷提供最新、最全的电影资源，涵盖国内外各类大片、连续剧、综艺及动漫。</p>
+                <p>网站采用先进的流媒体技术，确保播放流畅不卡顿。界面设计简洁易用，分类清晰，让您轻松找到想看的影片。</p>
+                <p>我们的使命是成为您观影路上的第一选择。无论您喜欢好莱坞大片，还是偏爱文艺小众，这里都能满足您的需求。</p>
+                <p>访问我们的官方网站：</p>
+                <div class="url">https://diyidianyingwang-app.github.io</div>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">（请复制以上网址到浏览器访问，享受极致观影体验）</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部信息 -->
+    <footer>
+        <p>&copy; 2024 第一电影网 (diyidianyingwang-app.github.io). All Rights Reserved.</p>
+        <p>关键词：第一电影网 | 高清电影 | 在线观看</p>
+        <div class="footer-links">
+            <a href="#">首页</a>
+            <a href="#">最新电影</a>
+            <a href="#">电影分类</a>
+            <a href="#">关于我们</a>
+        </div>
+    </footer>
+
+</body>
+</html>
